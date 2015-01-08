@@ -2,6 +2,7 @@ library(mvtnorm)
 library(mirt)
 source("ItemPlot.R")
 source("AlgoritmoSICS3PL.R")
+#source("EstimacionHabilidades.R")
 shinyServer(
   function(input, output) {
     
@@ -27,6 +28,8 @@ shinyServer(
       })
       salida
     }, options = list(orderClasses = TRUE))
+    
+    
     
     #output$est <- renderDataTable(as.data.frame(matrix(rnorm(25),ncol = 5)))
     

@@ -55,9 +55,9 @@ pt.cuad = - (pt.cuad)
 #pt.cuad
 w.cuad = Cuad[[2]]  /  sqrt(pi)
 
-pt.cuad = read.table("/home/mirt/Trabajo IRT/Algoritmo SICS/PWcuad.csv",dec=".",sep = " ",header = T)
-w.cuad = pt.cuad[,2]
-pt.cuad = pt.cuad[,1]
+nodes = read.table("/home/mirt/Trabajo IRT/Algoritmo SICS/PWcuad.csv",dec=".",sep = " ",header = T)
+w.cuad = nodes[,2]
+pt.cuad = nodes[,1]
 
 
 #Valores Iniciales Andrade
@@ -186,7 +186,8 @@ estimacion.Newton = function(datos){
   } #fin while
   zita[3,] = plogis(zita[3,])
   zita = t(zita)
-  list(zita=zita,contadorNear=contadorNear,ciclos = mm,pats = pats,hess = hess)
+  print(nodes)
+  list(zita=zita,contadorNear=contadorNear,ciclos = mm,pats = pats,hess = hess,nodes = nodes )
 }
 #gcc = NULL
 #sink("/home/mirt/Trabajo IRT/Algoritmo SICS/SalidaAUX.txt")

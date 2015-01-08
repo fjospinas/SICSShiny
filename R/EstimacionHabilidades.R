@@ -1,0 +1,76 @@
+#--------------------------Segundo método-------------------------------------------------
+#Método EAP
+
+#Probabilidad del patrón
+ggpat = function(pat,zita,nitems,cuad){
+  p = rep(0,nitems)
+  for(i in 1:nitems){
+    p[i] = gg(a = zita[i,1],d = zita[i,2],cp = qlogis(zita[i,3]),theta = cuad)
+    if(pat[i] == 0){
+      p[i] = 1 - p[i] 
+    }
+  }
+  prod(p)
+}
+
+#Metodo EAP
+hab.eap = function(est){
+  pt.cuad = est$nodes[,1]
+  w.cuad = est$nodes[,2]
+  pats = est$pats
+  npats = nrow(pats)
+  nitems = nrow(est$zita)
+  thetaEst3 = rep(0,npats)
+  for(j in 1:npats){
+    sumNum = 0
+    sumDen = 0
+    for(k in 1:41){
+      pat = pats[j,][1:nitems]
+      sumNum = sumNum + (pt.cuad[k] * w.cuad[k] * ggpat(pat = pat,zita = est$zita,nitems = nitems,cuad = pt.cuad[k]))
+      sumDen = sumDen + (w.cuad[k] * ggpat(pat = pat,zita = est$zita,nitems = nitems,cuad = pt.cuad[k]))
+    }
+    thetaEst3[j] = sumNum / sumDen
+  }
+  nombres = paste("Item",(1:nitems))
+  nombres = c("N Pat",nombres,c("Frec","Score"))
+  salida = cbind((1:npats),est$pats,thetaEst3)
+  colnames(salida) <- nombres
+  salida
+}
+
+#--------------------------Tercer método-------------------------------------------------
+#Método MAP
+hab.map = function(est){
+  nitems = nrow(est$zita)
+  npats = nrow(est$pats)
+#A la matriz de patrones  añade una columna de ceros a modo de valores iniciales
+
+patsTheta = cbind(est$pats,rep(0,nrow(est$pats)))
+
+
+logL = function(theta,pat,zita,nitems){
+  probPat = log(ggpat(pat,zita,nitems,theta)) - ((theta^2)/2)
+  -probPat
+}
+
+
+#Uso de la función nlp para oprimizar funciones de R -> R
+#No se puede usar optim debido a que optimiza funciones de R^p -> R
+#Revisar implemetnacion de nlm del libro:
+#Numerical Methods for Unconstrained Optimization and Nonlinear Equations
+MAP = function(patsTheta,zita,nitems){
+  pat = patsTheta[1:nitems]
+  theta = patsTheta[nitems+2]
+  opt = nlm(f = logL,p=theta,pat=pat,zita=zita,nitems=nitems)
+  opt$estimate
+}
+
+#Apply para cada uno de los patrones
+scoresSics = apply(patsTheta,1,FUN = MAP,zita = est$zita,nitems = nitems)
+patsTheta[,nitems+2] = scoresSics
+nombres = paste("Item",(1:nitems))
+nombres = c("N Pat",nombres,c("Frec","Score"))
+patsTheta = cbind((1:npats),patsTheta)
+colnames(patsTheta) <- nombres
+patsTheta
+}

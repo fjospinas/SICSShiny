@@ -6,8 +6,11 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       helpText("Test for shiny app with SICS algorithm"),
-      
-      fileInput("dataset", label = h3("Dataset")),
+      #Item estimations
+      h3("Item estimations"),      
+      fileInput("dataset", label = h4("Dataset")),
+      actionButton("goButton", "Estimate"),
+      h3("Score estimations")
       #fileInput("filehess", label = h3("Hessian imput")),
       #sliderInput("Item", 
       #            label = "Item Plot",
@@ -17,15 +20,13 @@ shinyUI(fluidPage(
       #            min = 200, max = 5000, value = 1000),
       #numericInput("alpha", label = "Alpha", value = 1),
       #checkboxInput("env", label = "Envelopes", value = FALSE)
-      actionButton("goButton", "Estimate")
-      
     ),
     
     mainPanel(
       tabsetPanel(
         id = 'salidas',
         tabPanel('Item estimations', dataTableOutput('est')),
-        tabPanel('Hability estimations', dataTableOutput('mytable2')),
+        tabPanel('Score estimations', dataTableOutput('hab')),
         tabPanel('Item plots', dataTableOutput('mytable3'))
       )    
       )
