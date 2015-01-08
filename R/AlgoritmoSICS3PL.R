@@ -186,7 +186,6 @@ estimacion.Newton = function(datos){
   } #fin while
   zita[3,] = plogis(zita[3,])
   zita = t(zita)
-  print(nodes)
   list(zita=zita,contadorNear=contadorNear,ciclos = mm,pats = pats,hess = hess,nodes = nodes )
 }
 #gcc = NULL
