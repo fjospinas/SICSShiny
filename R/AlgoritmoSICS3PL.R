@@ -6,8 +6,8 @@
 #-fopenmp
 
 #setwd("/home/mirt/Pruebas Shiny/SicsShiny/")
-system("PKG_CPPFLAGS=`Rscript -e 'Rcpp:::CxxFlags()'` PKG_LIBS=`Rscript -e 'Rcpp:::LdFlags()'` R CMD SHLIB  pasoe3.cpp")
-system("PKG_CPPFLAGS=`Rscript -e 'Rcpp:::CxxFlags()'` PKG_LIBS=`Rscript -e 'Rcpp:::LdFlags()'` R CMD SHLIB  pasom3.cpp")
+#system("PKG_CPPFLAGS=`Rscript -e 'Rcpp:::CxxFlags()'` PKG_LIBS=`Rscript -e 'Rcpp:::LdFlags()'` R CMD SHLIB  pasoe3.cpp")
+#system("PKG_CPPFLAGS=`Rscript -e 'Rcpp:::CxxFlags()'` PKG_LIBS=`Rscript -e 'Rcpp:::LdFlags()'` R CMD SHLIB  pasom3.cpp")
 dyn.load("pasoe3.so")
 dyn.load("pasom3.so")
 

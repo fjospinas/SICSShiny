@@ -7,7 +7,7 @@ shinyUI(fluidPage(
     sidebarPanel(
       helpText("Test for shiny app with SICS algorithm"),
       
-      fileInput("dataset", label = h3("Dataset"))
+      fileInput("dataset", label = h3("Dataset")),
       #fileInput("filehess", label = h3("Hessian imput")),
       #sliderInput("Item", 
       #            label = "Item Plot",
@@ -17,6 +17,7 @@ shinyUI(fluidPage(
       #            min = 200, max = 5000, value = 1000),
       #numericInput("alpha", label = "Alpha", value = 1),
       #checkboxInput("env", label = "Envelopes", value = FALSE)
+      actionButton("goButton", "Estimate")
       
     ),
     
