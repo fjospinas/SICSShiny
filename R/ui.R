@@ -14,16 +14,15 @@ shinyUI(fluidPage(
       radioButtons("radio", label = h4("Method"),
                    choices = list("EAP" = 1, "MAP" = 2), 
                    selected = 1),
-      actionButton("goButton2", "Score estimate")
-      #fileInput("filehess", label = h3("Hessian imput")),
-      #sliderInput("Item", 
-      #            label = "Item Plot",
-      #            min = 1, max = 5, value = 1),
-      #sliderInput("bootstrap", 
-      #            label = "Num Bootstrap",
-      #            min = 200, max = 5000, value = 1000),
-      #numericInput("alpha", label = "Alpha", value = 1),
-      #checkboxInput("env", label = "Envelopes", value = FALSE)
+      actionButton("goButton2", "Score estimate"),
+      h3("Item plot"),
+      numericInput('item', 'Item', 1,
+                   min = 1, max = 1),
+      checkboxInput("env", label = "Envelopes", value = FALSE),
+      sliderInput("bootstrap", 
+                              label = "Num Bootstrap",
+                              min = 200, max = 5000, value = 500),
+      numericInput("alpha", label = "Alpha", value = 1)
     ),
     
     mainPanel(
@@ -31,7 +30,7 @@ shinyUI(fluidPage(
         id = 'salidas',
         tabPanel('Item estimations', dataTableOutput('zita')),
         tabPanel('Score estimations', dataTableOutput('score')),
-        tabPanel('Item plots', dataTableOutput('mytable3'))
+        tabPanel('Item plots',  plotOutput('graf'))
       )    
       )
   )

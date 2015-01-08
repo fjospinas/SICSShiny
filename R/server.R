@@ -3,6 +3,7 @@ library(mirt)
 source("ItemPlot.R")
 source("AlgoritmoSICS3PL.R")
 source("EstimacionHabilidades.R")
+source("ItemPlot.R")
 shinyServer(
   function(input, output) {
     
@@ -42,18 +43,8 @@ shinyServer(
       salida
     }, options = list(orderClasses = TRUE))
     
-    
-    
-    #output$est <- renderDataTable(as.data.frame(matrix(rnorm(25),ncol = 5)))
-    
-    #output$map <- renderPlot({
-    #  if(!(is.null(input$dataset))){
-    #    data = read.table(input$dataset$datapath,header = T)
-    #    print(data)
-    #    med = colMeans(data)
-    #    plot((1:length(med)),med)
-        #plot.item(zita = zita,hess = hess,item = input$Item,numboot = input$bootstrap,alpha = input$alpha,envel = input$env)    
-    #  }  
-    #})
+    output$graf <- renderPlot({
+      plot.item(est = fit(),item = input$item,numboot = input$bootstrap,alpha = input$alpha,envel = input$env)
+    })
   }
 )
